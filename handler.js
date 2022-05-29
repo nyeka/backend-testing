@@ -122,7 +122,7 @@ const getNoteByIdHandler = (req, h) => {
 };
 
 module.exports = {
-  addnoteHandler,
+  addNoteHandler,
   getAllNotesHandler,
   getNoteByIdHandler,
   deleteNoteHandler,
