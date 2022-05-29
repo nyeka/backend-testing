@@ -2,39 +2,43 @@ const { nanoid } = require("nanoid");
 const notes = require("./notes");
 
 const addnoteHandler = (req, h) => {
-  const { title, tag, body } = req.payload;
+  const { title, tags, body } = req.payload;
 
   const id = nanoid(16);
   const createAt = new Date().toISOString;
   const updateAt = createAt;
 
   const newNotes = () => {
-    title, tag, body, id, createAt, updateAt;
+    title, tags, body, id, createAt, updateAt;
   };
   notes.push(newNotes);
 
   const isSuccess = notes.filter((note) => note.id === id).length > 0;
   if (isSuccess) {
     const response = h.response({
-      statusCode: 200,
-      message: "Success",
+      status: "success",
+      message: "Berhasil Ditambahkan",
       data: { noteId: id },
     });
-    response.header("Access-Control-Allow-Origin", "*");
+    response.code(201);
 
     return response;
   }
 
   const response = h.response({
-    statusCode: 400,
-    message: "Failed",
+    status: "error",
+    message: "Batal Ditambakan",
   });
+  response.code(500);
+
   return response;
 };
 
-const getAllNote = () => ({
-    status: 200,
-    data : notes
-})
+const getAllNotesHandler = () => ({
+  status: "success",
+  data: {
+    notes,
+  },
+});
 
-module.exports = { addnoteHandler, getAllNote };
+module.exports = { addnoteHandler, getAllNotesHandler };
